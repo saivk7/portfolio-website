@@ -6,7 +6,7 @@ import Header from './header/Header';
 
 const Main: React.FC = () =>{
     return(
-        <div>
+        <div className="main">
             <Header />
             <Terminal />
             <Footer />

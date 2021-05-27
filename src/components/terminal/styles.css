@@ -1,3 +1,13 @@
 .terminal-container{
-    border-radius: 1px;
-  }
+    display: flex;
+    margin:auto;
+    width: 80%;
+    border:1px solid black;
+
+}
+input{
+  size: inherit;
+  border: none;
+  background: transparent;
+  width: 200px;
+}
