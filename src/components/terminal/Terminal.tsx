@@ -1,7 +1,7 @@
-import { Container, makeStyles } from '@material-ui/core';
-import { InvertColorsOffOutlined } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core';
+
 import React, { useState } from 'react';
-import './styles.css';
+
 
 
 const useStyles = makeStyles(theme=> ({
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme=> ({
       }
 }));
 
-const Terminal: React.FC = () =>{
+const Terminal: React.FC = () => {
     const classes = useStyles({});
     const [searchCmd,setSearchCmd] = useState('/help');
     const [terminal,setTerminal] = useState({})
@@ -49,25 +49,18 @@ const Terminal: React.FC = () =>{
         }
     }
 
+    return (
     
-
-    return(
-        <>
         <div>
-            Terminal
-        </div>
-        <div className={classes.terminalContainer}>
-
+            <h1> Terminal</h1>
+            <div className={classes.terminalContainer}>
             <input type="text"
             id="searchCmd"
             className = {classes.commandInput} 
             onChange={handleInputChange} value={searchCmd}
             onKeyDown = {e=>handleKeyDown(e)}></input>
-
+            </div>
         </div>
-        
-        
-        </>
     );
 }
 
