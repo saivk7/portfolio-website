@@ -1,0 +1,11 @@
+"use strict";
+exports.__esModule = true;
+var File_1 = require("../File");
+var animals = [];
+var file1 = new File_1.File("zefee", "file", "/animals", "Husky dog in Gnv");
+var file2 = new File_1.File("BabyChai", "file", "/animals", "Maine coon cat in UK");
+var file3 = new File_1.File("NITK", "file", "/animals", "Student");
+animals.push(file1);
+animals.push(file2);
+animals.push(file3);
+exports["default"] = animals;

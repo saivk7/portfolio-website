@@ -14,3 +14,6 @@ let file3: File = new File("animals","directory","/",undefined,animals);
 homeArray[0] = file1;
 homeArray[1] = file2;
 homeArray[2] = file3;
+
+
+export default homeArray;

@@ -1,0 +1,11 @@
+"use strict";
+exports.__esModule = true;
+var File_1 = require("../File");
+var projects = [];
+var file1 = new File_1.File("chat app", "file", "/projects", "Full stack app");
+var file2 = new File_1.File("newdevjobs", "file", "/projects", "New dev jobs");
+var file3 = new File_1.File("FibonaaciHeap", "file", "/projects", "Implementation of Fib heap");
+projects.push(file1);
+projects.push(file2);
+projects.push(file3);
+exports["default"] = projects;

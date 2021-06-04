@@ -2,6 +2,9 @@ import { makeStyles } from '@material-ui/core';
 
 import React, { useState } from 'react';
 
+import homeArray from './info/index';
+
+
 
 
 const useStyles = makeStyles(theme=> ({
@@ -30,17 +33,18 @@ const useStyles = makeStyles(theme=> ({
 }));
 
 const Terminal: React.FC = () => {
+
     const classes = useStyles({});
     const [searchCmd,setSearchCmd] = useState('/help');
-    const [terminal,setTerminal] = useState({})
-
+    const [currentDirectory,setCurrentDirectory] = useState('/');
+    
+    
     const handleInputChange = (e:any)=>{
             console.log(e.target.value);
             setSearchCmd(e.target.value);
             e.target.style.width = e.target.value.length+10 + "ch";
     };
     
-
     const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) => {
         if(e.key==="Enter"){
             e.preventDefault();

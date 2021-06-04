@@ -42,4 +42,12 @@ export class File{
         return null;
     }
 
+    /* makeNewFolder(name:string): File {
+
+    }
+
+    makeNewFile(name:string,data:string) : File{
+
+    } */
+
 }

@@ -1,24 +1,50 @@
 
+import { findAllInRenderedTree } from 'react-dom/test-utils';
 import { File } from './File';
 
-let filearr;
+import { RecursiveFindDirectory } from './utils/fileUtils';
 
-let files :File[] = [];
+import homeArray from './info';
 
-let file1: File = new File("sai","file","/","wow1"); 
-let file2: File = new File("v","file","/","wow2"); 
-let file3: File = new File("k","file","/","wow3"); 
-let file4: File = new File("d","directory","/",undefined,[new File("sai",'file','/dir', "inside")]);
+/* console.log(homeArray);
 
-files[0] = file1;
-files[1] = file2;
-files[2] = file3;
-files[3] = file3;
-files[4] = file4;
+for(var i=0;i<homeArray.length;i++){
+    console.log(homeArray[i]);
+} */
 
-filearr = new File("sai","directory","/",undefined,files);
 
-let arr : File[]  = filearr.getFiles()!;
+export function printDir(arr: File[],type:'file'|'directory') {
+    const retarr = [];
+    for(var i=0; i<arr.length; i++){
+        if( arr[i].getType() === type){
+            retarr.push(arr[i].getName())
+        }
+    }
+    return retarr;
+    
+}
 
-console.log(arr[4]);
+export const retarr: any = [];
 
+function RecursiveFind(location:string,arr:File[]){
+    if(arr === null) return;
+
+    for(var i=0; i<arr.length; i++){
+        if(arr[i].getLocation() !== location){
+            if(arr[i].getType() === 'directory'){
+                RecursiveFind(location, arr[i].getFiles()!)
+            }
+
+        }else{
+            retarr.push(arr[i]);
+        }
+    }
+
+}
+
+
+
+const retArray:File[] = RecursiveFindDirectory("/experience",homeArray)!;
+console.log("files : ", retArray);
+console.log("files in dir", printDir(retArray,"file"));
+console.log("directoies in dir, ", printDir(retArray,"directory"));
