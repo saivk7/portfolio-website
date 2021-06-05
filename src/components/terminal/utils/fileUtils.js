@@ -15,6 +15,8 @@ var retArray = [];
 function RecursiveFindDirectory(location, arr) {
     if (arr === null)
         return null;
+    /*     console.log("!! !! !! searching for directory loc", location);
+     */
     for (var i = 0; i < arr.length; i++) {
         if (arr[i].getLocation() !== location) {
             if (arr[i].getType() === 'directory') {
@@ -22,7 +24,8 @@ function RecursiveFindDirectory(location, arr) {
             }
         }
         else {
-            retArray.push(arr[i]);
+            if (arr[i].getLocation() === location)
+                retArray.push(arr[i]);
         }
     }
     return retArray;

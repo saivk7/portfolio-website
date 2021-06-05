@@ -14,7 +14,8 @@ export function printDir(arr: File[],type:'file'|'directory') {
 const retArray: File[] = [];
 export function RecursiveFindDirectory(location:string,arr:File[]): File[] | null{
     if(arr === null) return null;
-
+/*     console.log("!! !! !! searching for directory loc", location);
+ */
     for(var i=0; i<arr.length; i++){
         if(arr[i].getLocation() !== location){
             if(arr[i].getType() === 'directory'){
@@ -22,7 +23,8 @@ export function RecursiveFindDirectory(location:string,arr:File[]): File[] | nul
             }
 
         }else{
-            retArray.push(arr[i]);
+
+            if(arr[i].getLocation()===location) retArray.push(arr[i]);
         }
     }
 
