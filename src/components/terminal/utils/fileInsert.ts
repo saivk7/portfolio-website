@@ -3,7 +3,7 @@ import { RecursiveFindDirectory } from './fileUtils';
 
 // Returns the array that needs modification 
 // called by insert of delete file functions
-function getRequiredArray (location:string,arr:File[],innerLevel:number):any {
+export function getRequiredArray (location:string,arr:File[],innerLevel:number):any {
     if(location === '/'){
         return arr;
     }
@@ -49,17 +49,23 @@ function getRequiredArray (location:string,arr:File[],innerLevel:number):any {
     }
 
 }
-export function deleteFile(file:string,location:string,fileArr:File[]): File[] {
+export function deleteFile(fileName:string,location:string,fileArr:File[]): File[] {
     
     var toDelete : File[] = getRequiredArray(location,fileArr,0);
-
+    console.log(" ***** toDeleted Array: \n\n", toDelete);
     try{
+
+        for(var i =0 ; i< toDelete.length ; i++){
+            if(toDelete[i].getName()===fileName){
+                toDelete.splice(i,1);
+            }
+        }
 
     }
     catch(e){
         console.log(e);
     }
-
+    console.log(" ***** deleted Array: \n\n", toDelete);
     return toDelete;
 
 }

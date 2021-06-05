@@ -9,3 +9,6 @@ console.log("before insert array", info_1["default"]);
 var afterArray = fileInsert_1.addFile(animalFile, info_1["default"]);
 console.log("\n after insert array", afterArray);
 console.log("\n Looking at the directory", fileUtils_1.RecursiveFindDirectory(animalFile.getLocation(), afterArray));
+fileInsert_1.deleteFile("lol2", "/animals/testDir", info_1["default"]);
+console.log("\n after insert array", afterArray);
+console.log("\n Looking at Animals dir after del: ", fileInsert_1.getRequiredArray('/animals/testDir', afterArray, 0));

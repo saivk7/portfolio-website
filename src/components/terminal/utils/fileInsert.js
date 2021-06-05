@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.addFile = exports.deleteFile = void 0;
+exports.addFile = exports.deleteFile = exports.getRequiredArray = void 0;
 // Returns the array that needs modification 
 // called by insert of delete file functions
 function getRequiredArray(location, arr, innerLevel) {
@@ -8,13 +8,13 @@ function getRequiredArray(location, arr, innerLevel) {
         return arr;
     }
     if (arr === null) {
-        console.log("\n\n ******* RETURNING  NULL  ******* \n\n");
+        //console.log("\n\n ******* RETURNING  NULL  ******* \n\n");
         return null;
     }
     for (var i = 0; i < arr.length; i++) {
         if (arr[i].getType() === 'directory') {
-            console.log("current:", (arr[i].getLocation() + ("" + ((innerLevel) >= 1 ? '/' : "")) + ("" + arr[i].getName())), " || required: ", location);
-            console.log("match?:", (arr[i].getLocation() + ("" + ((innerLevel) >= 1 ? '/' : "")) + arr[i].getName()) === (location));
+            //console.log("current:", (arr[i].getLocation() + ("" + ((innerLevel) >= 1 ? '/' : "")) + ("" + arr[i].getName())), " || required: ", location);
+            //console.log("match?:", (arr[i].getLocation() + ("" + ((innerLevel) >= 1 ? '/' : "")) + arr[i].getName()) === (location));
             /*
             const x = arr[i].getLocation() + `${ (innerLevel)>=1 ? '/' : "" }` +arr[i].getName();
 
@@ -37,19 +37,27 @@ function getRequiredArray(location, arr, innerLevel) {
         }
     }
 }
-function deleteFile(file, location, fileArr) {
+exports.getRequiredArray = getRequiredArray;
+function deleteFile(fileName, location, fileArr) {
     var toDelete = getRequiredArray(location, fileArr, 0);
+    //console.log(" ***** toDeleted Array: \n\n", toDelete);
     try {
+        for (var i = 0; i < toDelete.length; i++) {
+            if (toDelete[i].getName() === fileName) {
+                toDelete.splice(i, 1);
+            }
+        }
     }
     catch (e) {
         console.log(e);
     }
+    //console.log(" ***** deleted Array: \n\n", toDelete);
     return toDelete;
 }
 exports.deleteFile = deleteFile;
 function addFile(file, fileArr) {
     /* console.log("main array before", fileArr);*/
-    console.log('getLocation', file.getLocation());
+    //console.log('getLocation', file.getLocation());
     var toInsert = getRequiredArray(file.getLocation(), fileArr, 0);
     try {
         console.log("\n \n ***!!! RETURNED ARRAY : ", toInsert);
