@@ -1,95 +1,70 @@
-import { File } from '../File';
-import { RecursiveFindDirectory } from './fileUtils';
-
+"use strict";
+exports.__esModule = true;
+exports.addFile = exports.deleteFile = void 0;
 // Returns the array that needs modification 
 // called by insert of delete file functions
-function getRequiredArray (location:string,arr:File[],innerLevel:number):any {
-    if(location === '/'){
+function getRequiredArray(location, arr, innerLevel) {
+    if (location === '/') {
         return arr;
     }
-    
-    if(arr===null){
-        console.log("\n\n ******* RETURNING  NULL  ******* \n\n")
+    if (arr === null) {
+        console.log("\n\n ******* RETURNING  NULL  ******* \n\n");
         return null;
     }
-
-    for(var i=0;i<arr.length;i++){ 
-
-        if(arr[i].getType()==='directory'){
-
-            
-            console.log("current:",(arr[i].getLocation()+ `${ (innerLevel)>=1 ? '/' : "" }` + `${arr[i].getName()}`) , " || required: " ,location)
-            console.log("match?:", (arr[i].getLocation() + `${ (innerLevel)>=1 ? '/' : "" }`+ arr[i].getName()) === (location));
-            
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i].getType() === 'directory') {
+            console.log("current:", (arr[i].getLocation() + ("" + ((innerLevel) >= 1 ? '/' : "")) + ("" + arr[i].getName())), " || required: ", location);
+            console.log("match?:", (arr[i].getLocation() + ("" + ((innerLevel) >= 1 ? '/' : "")) + arr[i].getName()) === (location));
             /*
             const x = arr[i].getLocation() + `${ (innerLevel)>=1 ? '/' : "" }` +arr[i].getName();
 
             const y = location;
             console.log("x:",x,"||  y :",y, " compare " , (x===y));
             */
-
-            if( (arr[i].getLocation() + `${ (innerLevel)>=1 ? '/' : "" }` + `${arr[i].getName()}`) === location){
-
-                console.log("FOUND ARRAY",arr[i]);
-                console.log("FOUND ARRAY GET FILES", arr[i].getFiles() );
-                const retFile: File[] = arr[i].getFiles()!;
+            if ((arr[i].getLocation() + ("" + ((innerLevel) >= 1 ? '/' : "")) + ("" + arr[i].getName())) === location) {
+                console.log("FOUND ARRAY", arr[i]);
+                console.log("FOUND ARRAY GET FILES", arr[i].getFiles());
+                var retFile = arr[i].getFiles();
                 return retFile;
-
             }
-            else{
-
-                const getArr: File[] =  getRequiredArray(location,arr[i].getFiles()!,innerLevel+1);
+            else {
+                var getArr = getRequiredArray(location, arr[i].getFiles(), innerLevel + 1);
                 console.log("INTERMEDIATE ARRAY :", getArr);
-                if(getArr){
+                if (getArr) {
                     return getArr;
                 }
-                
             }
         }
     }
-
 }
-export function deleteFile(file:string,location:string,fileArr:File[]): File[] {
-    
-    var toDelete : File[] = getRequiredArray(location,fileArr,0);
-
-    try{
-
+function deleteFile(file, location, fileArr) {
+    var toDelete = getRequiredArray(location, fileArr, 0);
+    try {
     }
-    catch(e){
+    catch (e) {
         console.log(e);
     }
-
     return toDelete;
-
 }
-
-export function addFile( file:File,fileArr:File[] ) : File[] {
+exports.deleteFile = deleteFile;
+function addFile(file, fileArr) {
     /* console.log("main array before", fileArr);*/
     console.log('getLocation', file.getLocation());
-    
-    var toInsert : File[] = getRequiredArray(file.getLocation(),fileArr,0);
-
-    try{
-
-        console.log("\n \n ***!!! RETURNED ARRAY : " ,toInsert);
+    var toInsert = getRequiredArray(file.getLocation(), fileArr, 0);
+    try {
+        console.log("\n \n ***!!! RETURNED ARRAY : ", toInsert);
         toInsert.push(file);
-
     }
-    catch(e){
+    catch (e) {
         console.log(e);
     }
-    
     //console.log("AFTER PUSH \n", toInsert);
-    console.log("Main array" , fileArr);
+    console.log("Main array", fileArr);
     return fileArr;
 }
-
-
-
-
+exports.addFile = addFile;
 //console.log("ADD FILE",addFile(animalFile,homeArray));
-/* 
+/*
 
 if( fileArr[i].getType()==='directory' ){
 
@@ -99,7 +74,7 @@ if( fileArr[i].getType()==='directory' ){
 
                 if(fileArr[i].getFiles()){
                     console.log("PUSHING TO DIR ", fileArr[i].getName());
-                    console.log(" \n I'M HERE : " , fileArr[i].getFiles()); 
+                    console.log(" \n I'M HERE : " , fileArr[i].getFiles());
                     fileArr[i].getFiles()!.push(file);
                     console.log(" \n \n  AFTER PUSH",fileArr[i].getFiles());
                     console.log("\n\n the  new  return home",homeArray)
@@ -116,4 +91,4 @@ if( fileArr[i].getType()==='directory' ){
     }
     console.log("DONE")
     
-    */
+    */ 
