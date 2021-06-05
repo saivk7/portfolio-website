@@ -2,7 +2,7 @@ import {File} from '../File';
 
 import { printDir, RecursiveFindDirectory } from './fileUtils';
 
-import addFile from './fileInsert';
+import {addFile} from './fileInsert';
 
 const animalFile = new File('newAnimalFile','file','/animals/testDir');
 

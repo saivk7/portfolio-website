@@ -1,7 +1,8 @@
 import { File } from '../File';
 import { RecursiveFindDirectory } from './fileUtils';
 
-
+// Returns the array that needs modification 
+// called by insert of delete file functions
 function getRequiredArray (location:string,arr:File[],innerLevel:number):any {
     if(location === '/'){
         return arr;
@@ -48,19 +49,32 @@ function getRequiredArray (location:string,arr:File[],innerLevel:number):any {
     }
 
 }
-
-export default function addFile( file:File,fileArr:File[] ) : any{
-    //console.log("main array before", fileArr);
-    console.log('getLocation', file.getLocation());
-    console.log(" \n \n \n File to be inserted" , RecursiveFindDirectory( file.getLocation(),fileArr))
-
+export function deleteFile(file:string,location:string,fileArr:File[]): File[] {
     
-
-    var toInsert : File[] = getRequiredArray(file.getLocation(),fileArr,0)!;
+    var toDelete : File[] = getRequiredArray(location,fileArr,0);
 
     try{
-        console.log("\n \n ***!!! RETURNED ARRAY : " , getRequiredArray(file.getLocation(),fileArr,0)!);
-        console.log()
+
+    }
+    catch(e){
+        console.log(e);
+    }
+
+    return toDelete;
+
+}
+
+export function addFile( file:File,fileArr:File[] ) : File[] {
+    /* console.log("main array before", fileArr);*/
+    console.log('getLocation', file.getLocation());
+    console.log(" \n \n \n File to be inserted" , RecursiveFindDirectory( file.getLocation(),fileArr))
+    
+
+    var toInsert : File[] = getRequiredArray(file.getLocation(),fileArr,0);
+
+    try{
+
+        console.log("\n \n ***!!! RETURNED ARRAY : " ,toInsert);
         toInsert.push(file);
 
     }
@@ -72,6 +86,7 @@ export default function addFile( file:File,fileArr:File[] ) : any{
     //console.log("Main array" , fileArr);
     return fileArr;
 }
+
 
 
 
