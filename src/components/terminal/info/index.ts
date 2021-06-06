@@ -16,4 +16,8 @@ homeArray[1] = file2;
 homeArray[2] = file3;
 
 
+export const fileArr = homeArray.map( file => {
+    return file.getName();
+})
+
 export default homeArray;

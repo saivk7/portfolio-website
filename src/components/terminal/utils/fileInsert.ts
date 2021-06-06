@@ -92,6 +92,16 @@ export function addFile( file:File,fileArr:File[] ) : File[] {
 }
 
 
+export function printDir(arr: File[],type:'file'|'directory') {
+    const retarr = [];
+    for(var i=0; i<arr.length; i++){
+        if( arr[i].getType() === type){
+            retarr.push(arr[i].getName())
+        }
+    }
+    return retarr;
+    
+}
 
 
 //console.log("ADD FILE",addFile(animalFile,homeArray));

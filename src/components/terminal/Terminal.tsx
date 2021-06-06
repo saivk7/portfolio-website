@@ -1,13 +1,11 @@
 import { makeStyles } from '@material-ui/core';
-
-import React, { ReactHTMLElement, useState } from 'react';
-
-
-import homeArray from './info/index';
-
-
 import { File } from './File';
-import { parseCommandLine } from 'typescript';
+import React, {  useState } from 'react';
+import homeArray, { fileArr } from './info/index';
+
+import { getRequiredArray,addFile,deleteFile } from './utils/fileInsert';
+
+
 
 const useStyles = makeStyles(theme=> ({
     terminalContainer: {
@@ -42,27 +40,59 @@ const useStyles = makeStyles(theme=> ({
 
 const Terminal: React.FC = () => {
     const classes = useStyles({});
-    const [cmdInput,setCmdInput] = useState('/help');
+    const [cmdInput,setCmdInput] = useState('help');
     const [results,setResults] = useState('/');
+    const [location,setLocation] = useState('/');
 
     const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) => {
         if(e.key==="Enter"){
             e.preventDefault();
 
-            //parseCommand(cmdInput); complete this function
+            //parseCommand(cmdInput); complete this function 
+            //parse only if it is not empty command
             setCmdInput('');
             console.log("Enter key is pressed")
         }
     }
     const handleInputChange = (e:any)=>{
+        console.log(fileArr);
         console.log(e.target.value);
         setCmdInput(e.target.value);
         e.target.style.width = e.target.value.length+10 + "ch";
     };
 
-    
+    function getCommand(command:string):string {
+        let arr  = command.split(" ").filter((e)=> (e!==''));
+
+
+        return '';
+    }
 
     const parseCommand = (command:string) => {
+
+        let cmd:string = getCommand(command);
+        switch(command){
+            
+            
+            case 'cd':{
+                break;
+            }
+            case 'ls':{
+                break;
+            }
+
+            case 'mkdir':{
+                break;
+            }
+
+            case 'touch':{
+                break;
+            }
+
+            case 'cat':{
+
+            } 
+        }
         
     }
 
