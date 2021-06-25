@@ -12,6 +12,8 @@ function printDir(arr, type) {
 }
 exports.printDir = printDir;
 var retArray = [];
+//to recursively search for a given directory 
+//Depriciated: use getRequiredArray from ./fileInsert.ts
 function RecursiveFindDirectory(location, arr) {
     if (arr === null)
         return null;
