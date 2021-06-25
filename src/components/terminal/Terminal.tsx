@@ -61,16 +61,15 @@ const Terminal: React.FC = () => {
         e.target.style.width = e.target.value.length+10 + "ch";
     };
 
-    function getCommand(command:string):string {
+    function getCommandArgs(command:string):string[] {
         let arr  = command.split(" ").filter((e)=> (e!==''));
 
-
-        return '';
+        return arr;
     }
 
     const parseCommand = (command:string) => {
 
-        let cmd:string = getCommand(command);
+        let cmd:string[] = getCommandArgs(command);
         switch(command){
             
             
@@ -104,7 +103,7 @@ const Terminal: React.FC = () => {
         const arr = homeArray.map((file:File)=>{
             return (
                 <div>
-                     <p>location : {file.getLocation()}{file.getName()}</p>
+                     <p> {file.getLocation()}{file.getName()}</p>
                 </div>
                    
             )
