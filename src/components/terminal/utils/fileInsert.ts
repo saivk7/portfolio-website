@@ -78,7 +78,7 @@ export function addFile( file:File,fileArr:File[] ) : File[] {
 
     try{
 
-        console.log("\n \n ***!!! RETURNED ARRAY : " ,toInsert);
+        console.log("\n \n ***!!! RETURNED ARRAY  : " ,toInsert);
         toInsert.push(file);
 
     }

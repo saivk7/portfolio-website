@@ -22,6 +22,11 @@ const useStyles = makeStyles(theme=> ({
         fontSize: "18px",
         fontFamily: "Consolas",
         fontWeight: 200,
+        /* maxHeight:"500px",
+        maxWidth: "90%",
+        overFlow: "scroll" */
+        
+
     
     },
     commandInput: {
@@ -47,7 +52,7 @@ const Terminal: React.FC = () => {
 
     const [location,setLocation] = useState('/');
 
-    const [results,setResults] = useState([1,2]);
+    const [results,setResults]  = useState<JSX.Element[]>([]);
 
     
     const handleInputChange = (e:any)=>{ // for recording user input in the terminal
@@ -91,9 +96,11 @@ const Terminal: React.FC = () => {
         switch(cmd){
             
             case 'cd':{
+
                 break;
             }
             case 'ls':{
+                terminalOutput(homeArray);
                 break;
             }
 
@@ -102,6 +109,12 @@ const Terminal: React.FC = () => {
             }
 
             case 'touch':{
+                //terminalOutput(getRequiredArray("/experience",homeArray,0));
+                break;
+            }
+
+            case 'clear':{
+                setResults([])
                 break;
             }
 
@@ -120,26 +133,28 @@ const Terminal: React.FC = () => {
         const arr = homeArray.map((file:File)=>{
             return (
                 <div style={{margin:"5px 10px" , padding:"0px"}}>
-                     <p style={{margin:"0px"}}>{file.getLocation()}{file.getName() } </p>
+                     <p style={{margin:"0px"}}>{file.getName() } </p>
                 </div>
             )
         })
         const arr1 = [arr];
 
-        console.log("The arrays is " );
-        console.log(arr1);
-
-        return (
-            <div style={{display:"inline-flex"}}>
-                {arr}        
-            </div>
-        );
-
+        /* console.log("The arrays is " );
+        console.log(arr1); */
         
+        const returnElement: JSX.Element = <div style={{display:"inline-flex", flexWrap:"wrap"}}>
+                                                {arr}        
+                                            </div> 
+        
+        results?.push(returnElement)
+        console.log("results: " , results);
+        return returnElement;
 
     }
 
     
+    
+
 
     return (
     
@@ -161,10 +176,14 @@ const Terminal: React.FC = () => {
             <h2>Testing terminal</h2>
             
             <div className={classes.terminalContainer}>
-                {                
-                    terminalOutput(homeArray)
-                }
-                {terminalOutput(homeArray)}      
+                
+            {
+            results.map(result=>{
+                return result;
+            })
+            }      
+              
+            
 
             </div>
         </div>
