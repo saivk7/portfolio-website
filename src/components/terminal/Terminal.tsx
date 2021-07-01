@@ -4,8 +4,7 @@ import React, {  useState } from 'react';
 import homeArray, { fileArr } from './info/index';
 
 import { getRequiredArray,addFile,deleteFile } from './utils/fileInsert';
-import { SkipPreviousTwoTone } from '@material-ui/icons';
-import { render } from '@testing-library/react';
+
 
 
 
@@ -48,9 +47,8 @@ const useStyles = makeStyles(theme=> ({
 const Terminal: React.FC = () => {
     const classes = useStyles({});
 
-    const [cmdInput,setCmdInput] = useState('/ $ help');
-
-    const [location,setLocation] = useState('/');
+    const [workingDir, setWorkingDir] = useState('/home/dir')
+    const [cmdInput,setCmdInput] = useState('help');
 
     const [results,setResults]  = useState<JSX.Element[]>([]);
 
@@ -73,12 +71,10 @@ const Terminal: React.FC = () => {
 
             //parseCommand(cmdInput); complete this function 
             //parse only if it is not empty command
+            console.log("Enter Key pressed")
             var input = cmdInput; 
             parseCommand(input);
-            console.log("the cmd line input  is " , input);
-            
-            setCmdInput(location + ' $ ');
-            console.log("Enter key is pressed")
+            setCmdInput("");
         }
     }
 
@@ -86,12 +82,11 @@ const Terminal: React.FC = () => {
 
         let inputs:string[] = getCommandArgs(command);
         //console.log("parsing commands" , inputs);
+        console.log("Arguments are" , inputs);
+        
+        const cmd = inputs[0];
+        const file = inputs[1];
 
-        const dir = inputs[0];
-        const cmd = inputs[2];
-        const input = inputs[3];
-
-        console.log("input ", input, " command : " , cmd);
 
         switch(cmd){
             
@@ -109,7 +104,7 @@ const Terminal: React.FC = () => {
             }
 
             case 'touch':{
-                //terminalOutput(getRequiredArray("/experience",homeArray,0));
+                terminalOutput(getRequiredArray("/experience",homeArray,0));
                 break;
             }
 
@@ -119,15 +114,12 @@ const Terminal: React.FC = () => {
             }
 
             case 'cat':{
-
+                console.log("wow")
             } 
         }
         
     }
-
-    
-
-
+    //outputs the files that has to be in terminal output 
     function terminalOutput(homeArray : File[]): JSX.Element  {
 
         const arr = homeArray.map((file:File)=>{
@@ -142,7 +134,7 @@ const Terminal: React.FC = () => {
         /* console.log("The arrays is " );
         console.log(arr1); */
         
-        const returnElement: JSX.Element = <div style={{display:"inline-flex", flexWrap:"wrap"}}>
+        const returnElement: JSX.Element = <div style={{display:"inline-flex",columnCount:3, flexWrap:"wrap"}}>
                                                 {arr}        
                                             </div> 
         
@@ -182,8 +174,15 @@ const Terminal: React.FC = () => {
                 return result;
             })
             }      
-              
-            
+              <span style={{textAlign:"left"}}> <span style={{ color: "#2d84ea" }}>{workingDir}</span> $ &gt; {" "}
+              <input type="text"
+                    id="cmdInput"
+                    className = {classes.commandInput} 
+                    onChange={handleInputChange} 
+                    value={cmdInput}
+                    onKeyDown = {e=>handleKeyDown(e)}>        
+                </input>
+                </span>
 
             </div>
         </div>
