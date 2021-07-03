@@ -9,8 +9,8 @@ let homeArray :File[] = [];
 
 let file1: File = new File("experience","directory","/",undefined,experience); 
 let file2: File = new File("projects","directory","/",undefined,projects); 
-let file3: File = new File("animals","directory","/",undefined,animals); 
-let file4: File = new File("certifcations","directory","/",undefined,certifications); 
+let file4: File = new File("animals","directory","/",undefined,animals); 
+let file3: File = new File("certifications","directory","/",undefined,certifications); 
 
 homeArray[0] = file1;
 homeArray[1] = file2;

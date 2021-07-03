@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import { File } from './File';
 import React, { useState } from 'react';
-import homeArray, { fileArr } from './info/index';
+import homeArray, { fileArr } from './info';
 
 import { getRequiredArray, addFile, deleteFile } from './utils/fileInsert';
 import { checkServerIdentity } from 'tls';
@@ -44,10 +44,11 @@ const useStyles = makeStyles(theme => ({
         }
     },
     directoryStyle:{
-        color:"greenyellow"
+        color:"greenyellow",
+        margin: "0px"
     },
     fileStyle:{
-        
+        margin: "0px"
     }
 
     

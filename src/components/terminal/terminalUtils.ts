@@ -23,7 +23,9 @@ export function getDirectoryName(workingDir:string, dirName:string):string{
     console.log("replaced is " ,replaced , "working dir " , workingDir);
     
     if(workingDir==='/'){
+        console.log("Working dir is /" , replaced);
         return workingDir + replaced;
+        
     }else{
         return workingDir+ '/' + replaced;
     }
