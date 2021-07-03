@@ -1,0 +1,11 @@
+"use strict";
+exports.__esModule = true;
+var File_1 = require("../File");
+var certifications = [];
+var file1 = new File_1.File("AWS", "file", "/certifications", "AWS Certified Cloud Architect : Associate Level");
+var file2 = new File_1.File("Six Sigma", "file", "/certifications", "KPMG Certified Six Sigma : Green Belt");
+var file3 = new File_1.File("FibonaaciHeap", "file", "/certifications", "Implementation of Fib heap");
+certifications.push(file1);
+certifications.push(file2);
+certifications.push(file3);
+exports["default"] = certifications;

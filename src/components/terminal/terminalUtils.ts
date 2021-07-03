@@ -16,15 +16,28 @@ export function isValidDirectory(workingDir:string,dirName:string):boolean{
 //returns a proper dict name 
 export function getDirectoryName(workingDir:string, dirName:string):string{
     
-    let re = /[^/||a-zA-Z0-9]*/
-    const list = dirName.split(re);
-    console.log(list);
+    let re = /[^a-zA-Z0-9]*/ //replaces until first char [ex. ./home becomes home]
     
+    const replaced = dirName.replace(re,"");
 
-    return dirName;
+    console.log("replaced is " ,replaced , "working dir " , workingDir);
+    
+    if(workingDir==='/'){
+        return workingDir + replaced;
+    }else{
+        return workingDir+ '/' + replaced;
+    }
+    
 }
 
 export function getChangedDirectoryName(dir:string):string{
 
     return ""
 }
+
+
+console.log('test')
+
+const str = "./home";
+
+console.log(getDirectoryName("", str));

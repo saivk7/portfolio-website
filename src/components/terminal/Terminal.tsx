@@ -5,8 +5,8 @@ import homeArray, { fileArr } from './info/index';
 
 import { getRequiredArray, addFile, deleteFile } from './utils/fileInsert';
 import { checkServerIdentity } from 'tls';
+import { isValidDirectory, getChangedDirectoryName, getDirectoryName } from './terminalUtils';
 
-import { isValidDirectory, getChangedDirectoryName } from './terminalUtils';
 
 
 const useStyles = makeStyles(theme => ({
@@ -42,15 +42,23 @@ const useStyles = makeStyles(theme => ({
             outline: "0px solid transparent;",
             border: "none"
         }
+    },
+    directoryStyle:{
+        color:"greenyellow"
+    },
+    fileStyle:{
+        
     }
+
+    
+    
 }));
 
 const Terminal: React.FC = () => {
     const classes = useStyles({});
-
-    const [workingDir, setWorkingDir] = useState('/home/dir')
+    const [workingArr,setWorkingArr] = useState(homeArray);
+    const [workingDir, setWorkingDir] = useState('/')
     const [cmdInput, setCmdInput] = useState('help');
-
     const [results, setResults] = useState<JSX.Element[]>([]);
 
 
@@ -79,12 +87,12 @@ const Terminal: React.FC = () => {
         }
     }
     //outputs and add the the files to be displayed on terminal output to Reuslts array 
-    function terminalOutput(homeArray: File[]): JSX.Element {
+    function terminalOutput(FileArray: File[]): JSX.Element {
 
-        const arr = homeArray.map((file: File) => {
+        const arr = FileArray.map((file: File) => {
             return (
                 <div style={{ margin: "5px 10px", padding: "0px" }}>
-                    <p style={{ margin: "0px" }}>{file.getName()} </p>
+                    <p className={ file.getType()==='directory'?classes.directoryStyle:classes.fileStyle}>{file.getName()} </p>
                 </div>
             )
         })
@@ -105,18 +113,35 @@ const Terminal: React.FC = () => {
 
     function changeDirectory(dir:string){
         console.log("Change dir name:" , dir);
-        
-        
         if(dir){
-            /* if(checkDir(dir)){
 
-            } */
-            isValidDirectory(workingDir,dir)
+            if(isValidDirectory(workingDir,dir)){
+                setWorkingDir(prev=> {
+                    const newDir = getDirectoryName(prev,dir);
+                    console.log("changing working dir  to " , newDir);
+                    setWorkingArr(lul=>{
+                        const newArr :File[]= getRequiredArray(newDir,homeArray,0);
+                        console.log("changing working arr to :",newArr)
+                        return newArr;
+                    });
+                    return newDir;
+                })
+                    
+                
+
+            }else{
+                const returnElement: JSX.Element = <div style={{ display: "inline-flex", flexWrap: "wrap" }}>
+                    <span> No Such directory found </span>
+                    </div>
+                results?.push(returnElement)   
+            }
             
-            //getRequiredArray(`${workingDir}/${dir}`,homeArray,0);
-            setWorkingDir(`${workingDir}/${dir}`)
         }else{
-            setWorkingDir('/')
+            setWorkingDir(prev=>{
+                
+                setWorkingArr(homeArray);
+                return '/';
+            })
 
             return;
         }
@@ -140,7 +165,7 @@ const Terminal: React.FC = () => {
                 break;
             }
             case 'ls': {
-                terminalOutput(homeArray);
+                terminalOutput(workingArr);
                 break;
             }
 
