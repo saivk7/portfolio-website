@@ -4,7 +4,7 @@ import { File } from '../File';
 
 let projects :File[] = [];
 
-let file1: File = new File("chat app","file","/projects","Full stack app"); 
+let file1: File = new File("whatsapp","file","/projects","Full stack whatapp clone with real time texting"); 
 let file2: File = new File("newdevjobs","file","/projects","New dev jobs"); 
 let file3: File = new File("FibonaaciHeap","file","/projects","Implementation of Fib heap"); 
 
