@@ -9,11 +9,13 @@ import { isValidDirectory, getChangedDirectoryName, getDirectoryName } from './t
 
 
 import TerminalBar from './TerminalBar';
+import commands, { isValidCommand } from './Commands';
 
 const useStyles = makeStyles(theme => ({
     terminalContainer: {
         backgroundColor: "#1e1e1e",
         display: "grid",
+        gridAutoFlow: "columns ",
         margin: "auto",
         width: "75%",
         
@@ -24,13 +26,13 @@ const useStyles = makeStyles(theme => ({
         fontFamily: "monospace",
         fontWeight: 200,
         minHeight:"400px",
-        boxShadow:"10px 5px 10px lightgray;",
-        /* maxHeight:"500px",
-        maxWidth: "90%",
-        overFlow: "scroll" */
-        alignItems:"flex-start", alignContent:"flex-start",
+        maxHeight:"400px",
+        
+        boxShadow:"10px 5px 10px lightgray",
+        alignItems:"flex-start",
+        alignContent:"flex-start",
 
-
+        scrollbarColor:"transparent"
 
     },
     commandInput: {
@@ -70,7 +72,10 @@ const Terminal: React.FC = () => {
     const [cmdInput, setCmdInput] = useState('help');
     const [results, setResults] = useState<JSX.Element[]>([]);
     
+    React.useEffect(()=>{
+        console.log("use effect hook")
 
+    },[cmdInput,results,workingArr]);
 
 
     const handleInputChange = (e: any) => { // for recording user input in the terminal
@@ -84,6 +89,18 @@ const Terminal: React.FC = () => {
         let arr = command.split(" ").filter((e) => (e !== ''));
         return arr;
     }
+    const mockEnter = () => {
+        
+        const toPush: JSX.Element =  <div style={{  textAlign: "left" }}>
+            <span> user@web:<span style={{ color: "#2d84ea" }}>~{workingDir}</span> $ &gt; {" "} {cmdInput}</span>
+        </div>
+
+        results.push(toPush);
+        setResults(results);
+        terminalOutput(workingArr);
+        setCmdInput(cmdInput);
+        
+    }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && cmdInput!="" && cmdInput!=null) {
@@ -93,7 +110,7 @@ const Terminal: React.FC = () => {
             //parse only if it is not empty command
             console.log("Enter Key pressed")
             var input = cmdInput;
-            
+            var inputs = getCommandArgs(input);
             const toPush: JSX.Element =  <div style={{  textAlign: "left" }}>
                 <span> user@web:<span style={{ color: "#2d84ea" }}>~{workingDir}</span> $ &gt; {" "} {cmdInput}</span>
             </div>
@@ -110,10 +127,25 @@ const Terminal: React.FC = () => {
         }
         else if(e.key==="Tab"){
             e.preventDefault();
-
             console.log("tab pressed")
             console.log("command input is ", cmdInput)
+            let inputs: string[] = getCommandArgs(cmdInput);
+            console.log(isValidCommand(inputs[0]) , " input length")
+            if(inputs.length==1 && isValidCommand(inputs[0])){
+
+                console.log("valid and now adding to result");
+                
+                mockEnter();
+                
+                
+                return;
+            }
+
+
+
+
             
+
 
         }
     }
