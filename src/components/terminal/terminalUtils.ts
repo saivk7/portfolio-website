@@ -38,6 +38,20 @@ export function getChangedDirectoryName(dir:string):string{
 }
 
 
+export function getNearestMatch(file:string, workingArr:File[]):File[] | null{
+
+    const retArr: File[]  = workingArr.filter(workingFile=>{
+        var str = "^" + file
+        var regex = new RegExp(str,"i");
+
+        console.log("checking mactch, ", regex, workingFile.getName() ,workingFile.getName().match(regex));
+        if(workingFile.getName().match(regex)) return true;
+    })
+    return retArr.sort();
+    
+}
+
+
 console.log('test')
 
 const str = "./home";

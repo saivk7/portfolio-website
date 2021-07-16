@@ -5,11 +5,12 @@ import homeArray, { fileArr } from './info';
 
 import { getRequiredArray, addFile, deleteFile } from './utils/fileInsert';
 import { checkServerIdentity } from 'tls';
-import { isValidDirectory, getChangedDirectoryName, getDirectoryName } from './terminalUtils';
+import { isValidDirectory, getChangedDirectoryName, getDirectoryName, getNearestMatch } from './terminalUtils';
 
 
 import TerminalBar from './TerminalBar';
-import commands, { isValidCommand } from './Commands';
+import commands, { isValidTabCommand } from './Commands';
+import { emitKeypressEvents } from 'readline';
 
 const useStyles = makeStyles(theme => ({
     terminalContainer: {
@@ -23,7 +24,8 @@ const useStyles = makeStyles(theme => ({
         outline: "none",
         textShadow: "0 0 0 gray",
         fontSize: "1rem",
-        fontFamily: "monospace",
+        //fontFamily: "monospace",
+        fontFamily:"consolas",
         fontWeight: 200,
         minHeight:"400px",
         maxHeight:"400px",
@@ -43,7 +45,8 @@ const useStyles = makeStyles(theme => ({
         maxWidth:"100%",
         textShadow: "0 0 0 gray",
         fontSize:"1rem",
-        fontFamily: "monospace",
+        //fontFamily: "monospace",
+        fontFamily:"consolas",
         fontWeight: 200,
         
         "&:focus": {
@@ -52,12 +55,12 @@ const useStyles = makeStyles(theme => ({
         }
     },
     directoryStyle:{
-        color:"greenyellow",
+        color:"#2d84ea",
         margin: "0px"
     },
     fileStyle:{
         margin: "0px",
-        color: "yellow"
+        color: "greenyellow"
     }
 
     
@@ -71,11 +74,11 @@ const Terminal: React.FC = () => {
     const [workingDir, setWorkingDir] = useState('/')
     const [cmdInput, setCmdInput] = useState('help');
     const [results, setResults] = useState<JSX.Element[]>([]);
-    
+    const [count,setCount] = useState<number>(0);
     React.useEffect(()=>{
         console.log("use effect hook")
 
-    },[cmdInput,results,workingArr]);
+    },[cmdInput,results,workingArr,count]);
 
 
     const handleInputChange = (e: any) => { // for recording user input in the terminal
@@ -92,18 +95,19 @@ const Terminal: React.FC = () => {
     const mockEnter = () => {
         
         const toPush: JSX.Element =  <div style={{  textAlign: "left" }}>
-            <span> user@web:<span style={{ color: "#2d84ea" }}>~{workingDir}</span> $ &gt; {" "} {cmdInput}</span>
+            <span> guest@web:<span style={{ color: "#2d84ea" }}>~{workingDir}</span> $ {/*&gt*/} {" "} {cmdInput}</span>
         </div>
 
         results.push(toPush);
         setResults(results);
         terminalOutput(workingArr);
-        setCmdInput(cmdInput);
+        setCmdInput(cmdInput=>cmdInput);
+        setCount(count=> count+1);
         
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter" && cmdInput!="" && cmdInput!=null) {
+        if (e.key === "Enter") {
             e.preventDefault();
             
             //parseCommand(cmdInput); complete this function 
@@ -112,7 +116,7 @@ const Terminal: React.FC = () => {
             var input = cmdInput;
             var inputs = getCommandArgs(input);
             const toPush: JSX.Element =  <div style={{  textAlign: "left" }}>
-                <span> user@web:<span style={{ color: "#2d84ea" }}>~{workingDir}</span> $ &gt; {" "} {cmdInput}</span>
+                <span> guest@web:<span style={{ color: "#2d84ea" }}>~{workingDir}</span> $ {/*&gt*/} {" "} {cmdInput}</span>
             </div>
 
             results.push(toPush)
@@ -130,15 +134,41 @@ const Terminal: React.FC = () => {
             console.log("tab pressed")
             console.log("command input is ", cmdInput)
             let inputs: string[] = getCommandArgs(cmdInput);
-            console.log(isValidCommand(inputs[0]) , " input length")
-            if(inputs.length==1 && isValidCommand(inputs[0])){
+            //console.log(isValidTabCommand(inputs[0]) , " input length")
+            if(inputs.length==1 && isValidTabCommand(inputs[0])){
 
                 console.log("valid and now adding to result");
                 
                 mockEnter();
                 
                 
+                setResults(results);
                 return;
+            }else if(inputs.length>=2 && isValidTabCommand(inputs[0])){
+                
+                const nearestMathcArray:File[] = getNearestMatch(inputs[1],workingArr)!;
+                console.log("nearest match",nearestMathcArray);
+                if(nearestMathcArray.length>=2){
+                    
+                    const toPush: JSX.Element =  <div style={{  textAlign: "left" }}>
+                                                 <span> guest@web:<span style={{ color: "#2d84ea" }}>~{workingDir}</span> $ {/*&gt*/} {" "} {cmdInput}</span>
+                                                </div>
+    
+                    results.push(toPush)
+                    terminalOutput(nearestMathcArray);
+                    setCmdInput(cmdInput=> {
+                        setCount(count=> count+1);
+                        return inputs[0] + " " + inputs[1];
+                    });
+                    return;
+                    
+                    
+
+                }else if(nearestMathcArray.length===1){
+                    setCmdInput(inputs[0] + " " + nearestMathcArray[0].getName());
+                }
+
+                return nearestMathcArray;
             }
 
 
@@ -228,7 +258,7 @@ const Terminal: React.FC = () => {
                 else{
 
                     const returnElement: JSX.Element = <div style={{ display: "inline-flex", flexWrap: "wrap", marginLeft:"10px" }}>
-                    <span> {fileInArr.getName()} is a directory. Use the command <span>cd</span> to look at the directory</span>
+                    <span> {fileInArr.getName()} is a directory. Use the command <span>cd</span> to change directory</span>
                     </div>
                     
                     results?.push(returnElement)   
@@ -313,7 +343,7 @@ const Terminal: React.FC = () => {
                         return result;
                     })
                 }
-                <span style={{ textAlign: "left" }}> user@web:<span style={{ color: "#2d84ea" }}>~{workingDir}</span> $ &gt; {" "}
+                <span style={{ textAlign: "left" }}> guest@web:<span style={{ color: "#2d84ea" }}>~{workingDir}</span> $ {/*&gt*/} {" "}
                     <input type="text"
                         id="cmdInput"
                         className={classes.commandInput}
