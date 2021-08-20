@@ -1,6 +1,24 @@
-# Getting Started with Create React App
+# Terminal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> A Terminal Based Portfolio website built with TypeScript, React, Bootstrap UI, reatstrap.
+
+Live version available at : [terminal](https://saivenkateshk.netlify.app)
+
+
+## Commands
+
+List of commands implemented:
+
+- [x] ls - to list the files in current directory
+- [x] cd [directory_name]- to change directory
+- [x] cat [file_name] - to view the content of files
+- [x] clear- to clear the contents displayed on terminal
+- [x] help - to display the list of commands available
+- [x] cd - to go back to home directory
+- [ ] mkdir - to create a directory
+- [ ] touch - to create a new file 
+
+
 
 ## Available Scripts
 
