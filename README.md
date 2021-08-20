@@ -7,7 +7,7 @@ Live version available at : [terminal](https://saivenkateshk.netlify.app)
 
 ## Commands
 
-List of commands implemented:
+List of commands & Features implemented:
 
 - [x] ls - to list the files in current directory
 - [x] cd [directory_name]- to change directory
@@ -15,6 +15,8 @@ List of commands implemented:
 - [x] clear- to clear the contents displayed on terminal
 - [x] help - to display the list of commands available
 - [x] cd - to go back to home directory
+- [x] press 'tab' to autocomplete the file names
+
 - [ ] mkdir - to create a directory
 - [ ] touch - to create a new file 
 
