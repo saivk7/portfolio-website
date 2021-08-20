@@ -334,7 +334,7 @@ const Terminal: React.FC = () => {
 
             case 'help':{
                 const returnElement: JSX.Element = <div style={{ display: "inline-flex", flexWrap: "wrap", marginLeft:"10px" }}>
-                    <span>Supproted commands are ls,cat,cd,clear. To go back use 'cd'</span>
+                    <span>Supported commands are ls,cat,cd,clear. To go back use 'cd'</span>
                     </div>
                     results.push()
                     results?.push(returnElement)   

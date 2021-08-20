@@ -7,7 +7,7 @@ import certifications from './certifications';
 
 let homeArray :File[] = [];
 let file01: File = new File("contact","file","/","saivenkateshk@usf.edu"); 
-let file02: File = new File("skills","file","/",`[Java, python, JavaScript, TypeScript, AWS, Node.js, React, Redux, MicroServices, SQL]`); 
+let file02: File = new File("skills","file","/",`[Java, python, JavaScript, TypeScript, AWS, Node.js, React, Redux, SQL]`); 
 let file03: File = new File("animals","directory","/",undefined,animals); 
 let file04: File = new File("certifications","directory","/",undefined,certifications); 
 let file1: File = new File("experience","directory","/",undefined,experience); 

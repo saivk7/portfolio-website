@@ -33,21 +33,21 @@ const NavigationBar = () => {
               <NavLink href="/">Components</NavLink>
             </NavItem> */}
             <NavItem>
-              <NavLink href="https://github.com/saivk7">Projects</NavLink>
+              <NavLink href="https://github.com/saivk7" target="_blank" >Projects</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 Contact
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>
+                <DropdownItem href="https://linkedin.com/in/saikadiyala" target="_blank">
                   LinkedIn
                 </DropdownItem>
-                <DropdownItem>
+                <DropdownItem href="https://github.com/saivk7/portfolio-website" target="_blank">
                    Github
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem>
+                <DropdownItem href="/">
                   Reset
                 </DropdownItem>
               </DropdownMenu>

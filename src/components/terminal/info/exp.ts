@@ -3,8 +3,8 @@ import { File } from '../File';
 
 
 let experience :File[] = [];
-let file0: File = new File("magyk", "file", "/experience", "Software Developer")
-let file1: File = new File("vedanta","file","/experience","Software Enigeer"); 
+let file0: File = new File("magyk", "file", "/experience", "Software Developer focused on building cloud solutions on AWS")
+let file1: File = new File("vedanta","file","/experience","Software Enigeer working on backend microservices"); 
 let file2: File = new File("logicHive","file","/experience","Co-op"); 
 let file3: File = new File("NITK","file","/experience","Student Researcher"); 
 
