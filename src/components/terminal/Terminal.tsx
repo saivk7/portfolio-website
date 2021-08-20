@@ -13,24 +13,25 @@ import commands, { isValidTabCommand } from './Commands';
 import { emitKeypressEvents } from 'readline';
 
 const useStyles = makeStyles(theme => ({
+
     terminalContainer: {
         backgroundColor: "#1e1e1e",
         display: "grid",
         gridAutoFlow: "columns ",
         margin: "auto",
         width: "75%",
-        
+        height:"auto",
+        minHeight:"400px",
+        maxHeight:"400px",
         color: "white",
         outline: "none",
         textShadow: "0 0 0 gray",
-        fontSize: "1rem",
-        //fontFamily: "monospace",
-        fontFamily:"consolas",
-        fontWeight: 200,
-        minHeight:"400px",
-        maxHeight:"400px",
+        fontSize: "18px",
+        fontFamily: "consolas",
+        fontWeight: 400,
+        overflowY:"scroll",
         
-        boxShadow:"10px 5px 10px lightgray",
+        boxShadow:"5px 5px 5px  gray",
         alignItems:"flex-start",
         alignContent:"flex-start",
 
@@ -42,11 +43,11 @@ const useStyles = makeStyles(theme => ({
         outline: "none",
         border: "none",
         color: "white",
-        maxWidth:"100%",
+        maxWidth:"400px",
         textShadow: "0 0 0 gray",
-        fontSize:"1rem",
-        //fontFamily: "monospace",
-        fontFamily:"consolas",
+        fontSize:"18px",
+        fontFamily: "consolas",
+        
         fontWeight: 200,
         
         "&:focus": {
@@ -75,12 +76,19 @@ const Terminal: React.FC = () => {
     const [cmdInput, setCmdInput] = useState('help');
     const [results, setResults] = useState<JSX.Element[]>([]);
     const [count,setCount] = useState<number>(0);
+    const terminalHandler: HTMLElement = document.getElementById("terminalContainer")! 
     React.useEffect(()=>{
         console.log("use effect hook")
+        if(terminalHandler) terminalHandler.scrollTop = terminalHandler.scrollHeight - terminalHandler.clientHeight
 
-    },[cmdInput,results,workingArr,count]);
+    },[cmdInput,results,workingArr,count]); 
 
+    const handleClickFocus = (e:any) =>{
+        document.getElementById("cmdInput")?.focus()
 
+        return false;
+        
+    }
     const handleInputChange = (e: any) => { // for recording user input in the terminal
         //console.log(fileArr);
         //console.log(e.target.value);
@@ -128,6 +136,8 @@ const Terminal: React.FC = () => {
             parseCommand(input);
             
             setCmdInput("");
+            if(terminalHandler) terminalHandler.scrollTop = terminalHandler.scrollHeight - terminalHandler.clientHeight
+            
         }
         else if(e.key==="Tab"){
             e.preventDefault();
@@ -321,6 +331,15 @@ const Terminal: React.FC = () => {
                 showFileContent(file);
                 break;
             }
+
+            case 'help':{
+                const returnElement: JSX.Element = <div style={{ display: "inline-flex", flexWrap: "wrap", marginLeft:"10px" }}>
+                    <span>Supproted commands are ls,cat,cd,clear. To go back use 'cd'</span>
+                    </div>
+                    results.push()
+                    results?.push(returnElement)   
+
+            }
         }
 
     }
@@ -332,12 +351,12 @@ const Terminal: React.FC = () => {
 
     return (
 
-        <div>
-            <h2>Testing terminal</h2>
+        <div className="container" onClick={handleClickFocus}>
             
-            <div className={classes.terminalContainer}>
+            
+            <div >
             <TerminalBar />
-
+                <div className={classes.terminalContainer} id="terminalContainer">
                 {
                     results.map(result => {
                         return result;
@@ -352,6 +371,9 @@ const Terminal: React.FC = () => {
                         onKeyDown={e => handleKeyDown(e)}>
                     </input>
                 </span>
+
+                </div>
+                
 
             </div>
         </div>

@@ -1,15 +1,14 @@
 import React from 'react';
 import TerminalComp from './terminal';
-import Footer from './footer/Footer';
-import Header from './header/Header';
+import NavigationBar from './header/Header';
 
 
 const Main: React.FC = () =>{
     return(
         <div className="main">
-            <Header />
+            <NavigationBar />
             <TerminalComp />
-            <Footer />
+            
         </div>
     );
 }

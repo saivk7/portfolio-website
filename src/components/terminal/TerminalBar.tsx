@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { Container, makeStyles } from '@material-ui/core';
 import { isClassExpression } from 'typescript';
 
 
@@ -10,7 +10,10 @@ const useStyles = makeStyles(theme => ({
         height: "28px",
         display: "flex",
         justifyContent: "flex-start",
-        alignItems: "center"
+        alignItems: "center",
+        width:"75%",
+        margin: "auto",
+        boxShadow:"5px 15px 10px  gray"
       },
       termButton: {
         background: " #f96256",
@@ -43,11 +46,13 @@ const TerminalBar = () => {
     const classes = useStyles({});
 
     return (
-    <div className={classes.header}>
-        <div className={classes.termButton + " " + classes.exit}></div>
-        <div className={classes.termButton + " " + classes.minimize}></div>
-        <div className={classes.termButton + " " + classes.maximize}></div>
-      </div>
+      
+        <div className={classes.header} >
+          <div className={classes.termButton + " " + classes.exit}></div>
+          <div className={classes.termButton + " " + classes.minimize}></div>
+          <div className={classes.termButton + " " + classes.maximize}></div>
+        </div>
+     
     )
 }
 
